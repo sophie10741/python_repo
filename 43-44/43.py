@@ -1,3 +1,6 @@
+
+# 1
+
 import random
 class Car:
     def __init__(self, color, fuel, fuel_count_100):
@@ -47,3 +50,52 @@ for i in range(4):
     car2.fast_drive(30)
 
 print(car2.competition())
+
+# 2
+
+class Programmer:
+
+    SALARIES = {'Junior': 10, 'Middle': 15, 'Senior': 20}
+
+    def __init__(self, name, position):
+        self.name = name
+        self.position = position
+        self.hours_worked = 0
+        self.salary_per_hour = self.SALARIES[position]
+        self.total_salary = 0
+        self.promotions = 0
+
+    def work(self, time):
+        self.hours_worked += time
+        self.total_salary += time * self.salary_per_hour
+
+    def rise(self):
+        if self.position == 'Junior':
+            self.position = 'Middle'
+            self.salary_per_hour = self.SALARIES['Middle']
+        elif self.position == 'Middle':
+            self.position = 'Senior'
+            self.salary_per_hour = self.SALARIES['Senior']
+        elif self.position == 'Senior':
+            self.promotions += 1
+            self.salary_per_hour = self.SALARIES['Senior'] + self.promotions
+
+    def info(self):
+        return f"{self.name} {self.hours_worked}ч. {self.total_salary}тгр."
+
+
+programmer = Programmer('Васильев Иван', 'Junior')
+programmer.work(750)
+print(programmer.info())
+
+programmer.rise()
+programmer.work(500)
+print(programmer.info())
+
+programmer.rise()
+programmer.work(250)
+print(programmer.info())
+
+programmer.rise()
+programmer.work(250)
+print(programmer.info())
