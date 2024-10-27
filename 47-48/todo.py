@@ -75,7 +75,7 @@ class Controller:
         task_number -= 1
         self.model.delete_task(task_number)
         self.view.show_all_tasks(tasks)
-        
+
 # инициализируем объекты MVC
 model = TasksModel() # Модель
 view = View()  # Представление

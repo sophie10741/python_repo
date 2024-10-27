@@ -82,6 +82,5 @@ class Shop:
             else:
                 print("Некорректный ввод. Попробуйте снова.")
 
-
 shop = Shop()
 shop.run()
