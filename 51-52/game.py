@@ -1,12 +1,10 @@
 import random
 
 
-# Модель
 class Player:
     def __init__(self, name):
         self.name = name
         self.wins = 0
-
 
 class Game:
     def __init__(self, player1, player2):
