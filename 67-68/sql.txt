@@ -1,0 +1,20 @@
+-- Отображение всей информации из таблицы с овощами и фруктами
+SELECT * FROM fruits_and_vegetables;
+
+-- Отображение всех овощей
+SELECT * FROM fruits_and_vegetables WHERE type = 'Овощ';
+
+-- Отображение всех фруктов
+SELECT * FROM fruits_and_vegetables WHERE type = 'Фрукт';
+
+-- Отображение всех названий овощей и фруктов
+SELECT name FROM fruits_and_vegetables;
+
+-- Отображение всех уникальных цветов
+SELECT DISTINCT color FROM fruits_and_vegetables;
+
+-- Отображение фруктов конкретного цвета (Красный)
+SELECT * FROM fruits_and_vegetables WHERE type = 'Фрукт' AND color = 'Красный';
+
+-- Отображение овощей конкретного цвета (Зеленый)
+SELECT * FROM fruits_and_vegetables WHERE type = 'Овощ' AND color = 'Зеленый';
