@@ -1,0 +1,46 @@
+-- 1
+
+SELECT product.name
+FROM purchase
+JOIN product ON purchase.product_id = product.id
+WHERE purchase.customer_id = 3;
+
+-- 2
+
+SELECT * FROM product;
+
+-- 3
+
+SELECT customer.fio AS Покупатель, product.name AS Продукт
+FROM purchase
+JOIN customer ON purchase.customer_id = customer.id
+JOIN product ON purchase.product_id = product.id;
+
+-- 4
+
+SELECT DISTINCT customer.fio
+FROM purchase
+JOIN customer ON purchase.customer_id = customer.id
+JOIN product ON purchase.product_id = product.id
+WHERE product.name = 'Ноутбук';
+
+-- 5
+
+SELECT product.name, COUNT(purchase.id) AS Количество_покупок
+FROM purchase
+JOIN product ON purchase.product_id = product.id
+GROUP BY product.name;
+
+-- 6
+
+SELECT DISTINCT product.name
+FROM purchase
+JOIN product ON purchase.product_id = product.id;
+
+-- 7
+
+SELECT customer.fio
+FROM purchase
+JOIN customer ON purchase.customer_id = customer.id
+GROUP BY customer.fio
+HAVING COUNT(purchase.product_id) > 2;
