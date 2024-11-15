@@ -1,0 +1,117 @@
+-- 16
+
+SELECT Passenger.name, COUNT(*) AS count
+FROM Pass_in_trip
+JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
+GROUP BY Passenger.name
+HAVING COUNT(*) >= 1
+ORDER BY count DESC, Passenger.name ASC;
+
+-- 17
+
+SELECT FamilyMembers.member_name, FamilyMembers.status, SUM(Payments.amount * Payments.unit_price) AS costs
+FROM Payments
+JOIN FamilyMembers ON Payments.family_member = FamilyMembers.member_id
+WHERE YEAR(Payments.date) = 2005
+GROUP BY FamilyMembers.member_name, FamilyMembers.status
+HAVING costs > 0
+ORDER BY costs DESC;
+
+-- 18
+
+SELECT member_name
+FROM FamilyMembers
+WHERE birthday = (SELECT MIN(birthday) FROM FamilyMembers);
+
+-- 19
+
+SELECT DISTINCT status
+FROM FamilyMembers
+JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+JOIN Goods ON Payments.good = Goods.good_id
+WHERE Goods.good_name = 'potato';
+
+-- 20
+
+SELECT 
+    FamilyMembers.status,
+    FamilyMembers.member_name,
+    SUM(Payments.amount * Payments.unit_price) AS costs
+FROM 
+    FamilyMembers
+JOIN 
+    Payments ON FamilyMembers.member_id = Payments.family_member
+JOIN 
+    Goods ON Payments.good = Goods.good_id
+JOIN 
+    GoodTypes ON Goods.type = GoodTypes.good_type_id
+WHERE 
+    GoodTypes.good_type_name = 'entertainment'
+GROUP BY 
+    FamilyMembers.status, FamilyMembers.member_name;
+
+-- 21
+
+SELECT 
+    Goods.good_name
+FROM 
+    Goods
+JOIN 
+    Payments ON Goods.good_id = Payments.good
+GROUP BY 
+    Goods.good_name
+HAVING 
+    COUNT(Payments.payment_id) > 1;
+
+
+-- 22
+
+SELECT 
+    member_name
+FROM 
+    FamilyMembers
+WHERE 
+    status = 'mother';
+
+
+-- 23
+
+SELECT 
+    g.good_name,
+    p.unit_price
+FROM 
+    Goods g
+JOIN 
+    Payments p ON g.good_id = p.good
+JOIN 
+    GoodTypes gt ON g.type = gt.good_type_id
+WHERE 
+    gt.good_type_name = 'delicacies'
+ORDER BY 
+    p.unit_price DESC
+LIMIT 1;
+
+-- 24
+
+SELECT 
+    fm.member_name,
+    SUM(p.amount * p.unit_price) AS costs
+FROM 
+    Payments p
+JOIN 
+    FamilyMembers fm ON p.family_member = fm.member_id
+WHERE 
+    DATE_FORMAT(p.date, '%Y-%m') = '2005-06'
+GROUP BY 
+    fm.member_name;
+
+-- 25
+
+SELECT 
+    g.good_name
+FROM 
+    Goods g
+LEFT JOIN 
+    Payments p ON g.good_id = p.good AND YEAR(p.date) = 2005
+WHERE 
+    p.good IS NULL;
