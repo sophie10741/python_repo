@@ -1,27 +1,33 @@
 -- 1
 
 CREATE VIEW user_purchase_count AS
-SELECT customer.fio, COUNT(order.id) AS purchase_count
-FROM customer
-LEFT JOIN order ON customer.id = order.customer_id
-GROUP BY customer.fio
-ORDER BY purchase_count DESC;
+SELECT 
+    customer.fio AS ФИО,
+    COUNT(purchase.id) AS Количество_покупок
+FROM purchase
+JOIN customer ON purchase.customer_id = customer.id
+GROUP BY customer.id;
 
 -- 2
 
-CREATE VIEW user_product_purchases AS
-SELECT customer.fio, product.name AS product_name
-FROM customer
-JOIN order ON customer.id = order.customer_id
-JOIN order_item ON order.id = order_item.order_id
-JOIN product ON order_item.product_id = product.id
-ORDER BY customer.fio, product.name;
+CREATE VIEW user_product_list AS
+SELECT 
+    customer.fio AS ФИО,
+    product.name AS Продукт
+FROM purchase
+JOIN customer ON purchase.customer_id = customer.id
+JOIN product ON purchase.product_id = product.id;
 
 -- 3
 
-CREATE TRIGGER fio_change_customer
+CREATE TRIGGER update_fio_log
 AFTER UPDATE OF fio ON customer
 BEGIN
-    INSERT INTO fio_log (customer_id, old_fio, new_fio, datetime)
-    VALUES (NEW.id, OLD.fio, NEW.fio, datetime('now'));
+    INSERT INTO customer_update_log (customer_id, old_fio, new_fio, updated_at)
+    VALUES (
+        OLD.id,
+        OLD.fio,
+        NEW.fio,
+        DATETIME('now')
+    );
 END;
